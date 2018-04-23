@@ -11,5 +11,7 @@ steps:
     clearCaches: false
     subDirectory: docroot
     drupalVersion: 8
-    configSyncDirectory: config/sync
+    configSyncDirectory: ../config/sync
     runInstall: bear
+  - name: Run behat tests
+    command: 'cd /var/www/html/profiles/contrib/bear/tests ; composer install ; ./bin/behat --profile probo'
