@@ -1,15 +1,15 @@
 image: proboci/ubuntu-16.04-lamp:php7.1-nightly
 steps:
   - name: Update composer
-      command: '/usr/local/bin/composer self-update'
+    command: '/usr/local/bin/composer self-update'
   - name: Require drush 8.1.15.
-      command: 'cd /src && composer global require drush/drush:8.1.15'
+    command: 'cd /src && composer global require drush/drush:8.1.15'
   - name: Install composer packages with dependencies.
-      command: 'composer install -d /src/'
+    command: 'composer install -d /src/'
   - name: Probo site setup
-      plugin: Drupal
-      clearCaches: false
-      subDirectory: docroot
-      drupalVersion: 8
-      configSyncDirectory: config/sync
-      runInstall: bear
+    plugin: Drupal
+    clearCaches: false
+    subDirectory: docroot
+    drupalVersion: 8
+    configSyncDirectory: config/sync
+    runInstall: bear
