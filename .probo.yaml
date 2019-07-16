@@ -1,0 +1,32 @@
+image: proboci/ubuntu-16.04-lamp:php-7.2
+steps:
+  - name: Download Drupal 8 Core latest.
+    plugin: Script
+    script: |
+      composer create-project drupal-composer/drupal-project:8.x-dev /tmp/src --no-interaction
+      cp -Rf /tmp/src/* /src
+      cd /src
+      composer require drupal/devel drush/drush cweagans/composer-patches
+      composer install
+  - name: Drupal site install.
+    plugin: Drupal
+    clearCaches: false
+    subDirectory: web
+    drupalVersion: 8
+  - name: Install Drupal site.
+    plugin: Script
+    script: |
+      vendor/drush/drush/drush site-install -y --root=/var/www/html standard --db-url='mysqli://root:strongpassword@localhost/drupal'
+  - name: Generate login link.
+    plugin: Script
+    script: |
+      vendor/drush/drush/drush uli
+  - name: Install and initialize Behat.
+    plugin: Script
+    script: |
+      composer require --dev behat/behat:3.3 dmore/behat-chrome-extension drupal/drupal-extension
+      composer install
+  - name: Run behat tests.
+    plugin: Script
+    script: |
+      vendor/bin/behat

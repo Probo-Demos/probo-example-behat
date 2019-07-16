@@ -1,0 +1,30 @@
+default:
+  suites:
+    default:
+      contexts:
+        - FeatureContext
+        - Drupal\DrupalExtension\Context\DrupalContext
+        - Drupal\DrupalExtension\Context\MinkContext
+      paths:
+        - "%paths.base%/features"
+  gherkin:
+    cache: ~
+  extensions:
+    DMore\ChromeExtension\Behat\ServiceContainer\ChromeExtension: ~
+    Behat\MinkExtension:
+      goutte: ~
+      base_url: /
+      show_cmd: google-chrome %s
+      javascript_session: chrome
+      chrome:
+        api_url: "http://localhost:9222"
+    Drupal\DrupalExtension:
+      blackbox: ~
+      api_driver: drupal
+      drupal:
+        drupal_root: web/
+      region_map:
+        header: "#header"
+        sidebar: "#sidebar-first"
+        content: "#content"
+        footer: ".site-footer"
