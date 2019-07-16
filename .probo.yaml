@@ -26,3 +26,7 @@ steps:
     script: |
       composer require --dev behat/behat:3.3 dmore/behat-chrome-extension drupal/drupal-extension
       composer install
+  - name: Run behat tests.
+    plugin: Script
+    script: |
+      vendor/bin/behat
